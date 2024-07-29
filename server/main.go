@@ -35,6 +35,9 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// by default when you server a static html file the go will look for the index.html
+	// but if you search like __url__/form.html the form.html file will be loaded.
+
 	filesServer := http.FileServer(http.Dir("./static"))
 	http.Handle("/", filesServer)
 	http.HandleFunc("/form", formHandler)
