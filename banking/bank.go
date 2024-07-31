@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/Pallinder/go-randomdata"
 	"github.com/basics/fileOps"
 )
 
@@ -13,6 +14,7 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Welcome to Go bank")
+	fmt.Println(randomdata.FullName(1))
 
 	for {
 		presentOptions()
