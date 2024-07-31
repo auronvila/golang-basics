@@ -1,35 +1,14 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+	"github.com/basics/fileOps"
 )
 
 const accountBalanceFileName = "balance.txt"
 
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(accountBalanceFileName, []byte(balanceText), 0644)
-}
-
-func readBalanceFromFile() (float64, error) {
-	file, err := os.ReadFile(accountBalanceFileName)
-	if err != nil {
-		errMsg := fmt.Sprintf("failed to read from the file: %v", accountBalanceFileName)
-		return -1, errors.New(errMsg)
-	}
-	balanceText := file
-	balance, _ := strconv.ParseFloat(string(balanceText), 64)
-	//if e != nil {
-	//	return -1, errors.New("failed to parse the float value")
-	//}
-	return balance, nil
-}
-
 func main() {
-	accountBalance, err := readBalanceFromFile()
+	accountBalance, err := fileOps.GetFloatFromFile(accountBalanceFileName)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +21,7 @@ func main() {
 		fmt.Scan(&choice)
 
 		if choice == 1 {
-			accountBalance, _ := readBalanceFromFile()
+			accountBalance, _ := fileOps.GetFloatFromFile(accountBalanceFileName)
 			fmt.Println(accountBalance)
 		} else if choice == 2 {
 			fmt.Print("Your deposit: ")
@@ -55,7 +34,7 @@ func main() {
 			}
 			accountBalance += depositAmount
 			fmt.Println("Your updated balance: ", accountBalance)
-			writeBalanceToFile(accountBalance)
+			fileOps.WriteFloatToFile(accountBalance, accountBalanceFileName)
 		} else if choice == 3 {
 			fmt.Print("Your withdraw amount: ")
 			var withdrawAmount float64
@@ -72,7 +51,7 @@ func main() {
 			}
 			accountBalance -= withdrawAmount
 			fmt.Println("Your updated balance: ", accountBalance)
-			writeBalanceToFile(accountBalance)
+			fileOps.WriteFloatToFile(accountBalance, accountBalanceFileName)
 		} else if choice == 4 {
 			fmt.Println("You exited the banking operation successfully")
 			break
