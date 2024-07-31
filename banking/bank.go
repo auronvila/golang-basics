@@ -20,11 +20,11 @@ func readBalanceFromFile() (float64, error) {
 		errMsg := fmt.Sprintf("failed to read from the file: %v", accountBalanceFileName)
 		return -1, errors.New(errMsg)
 	}
-	balanceText := string(file)
-	balance, err := strconv.ParseFloat(balanceText, 64)
-	if err != nil {
-		return -1, errors.New("failed to parse the float value")
-	}
+	balanceText := file
+	balance, _ := strconv.ParseFloat(string(balanceText), 64)
+	//if e != nil {
+	//	return -1, errors.New("failed to parse the float value")
+	//}
 	return balance, nil
 }
 
@@ -36,11 +36,7 @@ func main() {
 	fmt.Println("Welcome to Go bank")
 
 	for {
-		fmt.Println("What do you want to do?")
-		fmt.Println("1. Check balance")
-		fmt.Println("2. Deposit money")
-		fmt.Println("3. Withdraw money")
-		fmt.Println("4. Exit")
+		presentOptions()
 
 		var choice int
 		fmt.Scan(&choice)
