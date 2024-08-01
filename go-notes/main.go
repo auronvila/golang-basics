@@ -4,27 +4,40 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/go-notes/note"
+	"github.com/go-notes/todo"
 	"os"
 	"strings"
 )
 
+type saver interface {
+	Save() error
+}
+
+type outputtable interface {
+	saver
+	Display()
+}
+
 func main() {
 	title, content := getNoteData()
+	todoText := getUserInput("Todo text: ")
 
-	noteData, err := note.New(title, content)
+	todoData, err := todo.New(todoText)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	noteData.Display()
-	err = noteData.Save()
+	err = outPutData(todoData)
+
+	fmt.Println("Successfully saved the note to the file")
+	userNote, err := note.New(title, content)
 	if err != nil {
-		fmt.Println("Saving node failed")
+		fmt.Println(err)
 		return
 	}
 
-	fmt.Println("Successfully saved the note to the file")
+	err = outPutData(userNote)
 }
 
 func getUserInput(prompt string) string {
@@ -47,4 +60,20 @@ func getNoteData() (string, string) {
 	title := getUserInput("Enter the note title")
 	content := getUserInput("Enter note content")
 	return title, content
+}
+
+func saveData(data saver) error {
+	err := data.Save()
+	if err != nil {
+		fmt.Println("Saving node failed")
+		return err
+	}
+
+	fmt.Println("Successfully saved the note to the file")
+	return nil
+}
+
+func outPutData(data outputtable) error {
+	data.Display()
+	return saveData(data)
 }
