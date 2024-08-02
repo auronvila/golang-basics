@@ -54,6 +54,13 @@ func main() {
 		Price: 1.3,
 	})
 	fmt.Println(dynamicProducts)
+
+	discountPrices := []int{1, 2, 3, 4}
+	prices := []int{5, 6, 7, 8, 9}
+
+	// use the ... dots to take all the values inside the slice and append to the priceTotal one by one.
+	pricesTotal := append(discountPrices, prices...)
+	fmt.Println(pricesTotal)
 }
 
 // Time to practice what you learned!
