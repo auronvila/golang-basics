@@ -8,4 +8,6 @@ func main() {
 		"amazon web services": "www.aws.com",
 	}
 	fmt.Println(websites["google"])
+	delete(websites, "google")
+	fmt.Println(websites)
 }
