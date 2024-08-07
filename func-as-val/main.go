@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+type transformFuncType func(int) int
+
 func main() {
 	numbers := []int{1, 2, 3, 4}
 	// use the function as a parameter and based on the function perform calculations
@@ -10,7 +12,7 @@ func main() {
 	fmt.Println(transformedNums)
 }
 
-func transformNumbers(numbers []int, transformFunc func(int) int) []int {
+func transformNumbers(numbers []int, transformFunc transformFuncType) []int {
 	var transformedNumbers []int
 
 	for _, val := range numbers {
