@@ -10,11 +10,11 @@ func main() {
 	fmt.Println(transformedNums)
 }
 
-func transformNumbers(numbers []int, transformType func(int) int) []int {
+func transformNumbers(numbers []int, transformFunc func(int) int) []int {
 	var transformedNumbers []int
 
 	for _, val := range numbers {
-		transformedNumbers = append(transformedNumbers, transformType(val))
+		transformedNumbers = append(transformedNumbers, transformFunc(val))
 	}
 
 	return transformedNumbers
